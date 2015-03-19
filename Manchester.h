@@ -79,7 +79,13 @@ allowing us to transmit even with up to 100% in clock speed difference
 #define MaxLongCount 129 //pulse higher count on double pulse
 
 //setup timing for transmitter
-#define HALF_BIT_INTERVAL 3072 //(=48 * 1024 * 1000000 / 16000000Hz) microseconds for speed factor 0 (300baud)
+#if F_CPU == 1000000UL
+    #define HALF_BIT_INTERVAL 49152 //(=48 * 1024 * 1000000 / 1000000Hz)
+#elif F_CPU == 8000000UL
+   #define HALF_BIT_INTERVAL 6114 //(=48 * 1024 * 1000000 / 8000000Hz)
+#else //16000000UL
+   #define HALF_BIT_INTERVAL 3072 //(=48 * 1024 * 1000000 / 16000000Hz) microseconds for speed factor 0 (300baud)
+#endif
 
 //it's common to zero terminate a string or to transmit small numbers involving a lot of zeroes
 //those zeroes may be mistaken for training pattern, confusing the receiver and resulting high packet lost, 
