@@ -362,7 +362,7 @@ void MANRX_SetupReceive(uint8_t speedFactor)
     OCR1A is 16 bit register
     */
 
-    TCCR1A = _BV(WGM12); // reset counter on match
+    TCCR1B = _BV(WGM12); // reset counter on match
     TCCR1B =  _BV(CS11); // 1/8 prescaler
     #if F_CPU == 1000000UL
       OCR1A = (64 >> speedFactor) - 1; 
@@ -475,6 +475,8 @@ ISR(TIMER1_COMPB_vect)
 ISR(TIM1_COMPA_vect)
 #elif defined(__AVR_ATmega32U4__)
 ISR(TIMER3_COMPA_vect)
+#elif defined(__AVR_ATmega8__)
+ISR(TIMER1_COMPA_vect)
 #else
 ISR(TIMER2_COMPA_vect)
 #endif
